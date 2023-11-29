@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 
 import classes from "./MainNavigation.module.css";
 import { useContext } from "react";
