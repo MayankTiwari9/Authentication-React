@@ -1,14 +1,14 @@
-// import { Switch, Route, BrowserRouter, Routes } from "react-router-dom";
-
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import UserProfile from "./components/Profile/UserProfile";
 import AuthPage from "./pages/AuthPage";
 import HomePage from "./pages/HomePage";
-import React from "react";
-import { TokenContextProvider } from "./store/token-context";
+import React, { useContext } from "react";
+import TokenContext, { TokenContextProvider } from "./store/token-context";
 
 const App = () => {
+  const tokenContext = useContext(TokenContext);
+
   return (
     <TokenContextProvider>
       <BrowserRouter>
@@ -16,9 +16,17 @@ const App = () => {
         <Routes>
           <Route path="/" exact element={<HomePage />} />
 
-          <Route path="/auth" element={<AuthPage />} />
+          {!tokenContext.isLoggedIn && (
+            <Route path="/auth" element={<AuthPage />} />
+          )}
 
-          <Route path="/profile" element={<UserProfile />} />
+          {tokenContext.isLoggedIn && (
+
+            <Route exact path="/profile" element={<UserProfile />} />
+           )}
+
+
+          <Route exact path="*" element={<Navigate to="/" />} />
         </Routes>
       </BrowserRouter>
     </TokenContextProvider>

@@ -1,4 +1,4 @@
-import { Link, redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import classes from "./MainNavigation.module.css";
 import { useContext } from "react";
@@ -9,6 +9,8 @@ const MainNavigation = () => {
 
   const logoutHandler = () => {
     tokenContext.logout();
+
+    localStorage.removeItem("token");
   }
 
   const isLoggedIn = tokenContext.isLoggedIn;
