@@ -3,14 +3,13 @@ import Layout from "./components/Layout/Layout";
 import UserProfile from "./components/Profile/UserProfile";
 import AuthPage from "./pages/AuthPage";
 import HomePage from "./pages/HomePage";
-import React, { useContext } from "react";
-import TokenContext, { TokenContextProvider } from "./store/token-context";
+import { useContext } from "react";
+import TokenContext from "./store/token-context";
 
 const App = () => {
   const tokenContext = useContext(TokenContext);
 
   return (
-    <TokenContextProvider>
       <BrowserRouter>
         <Layout />
         <Routes>
@@ -21,15 +20,12 @@ const App = () => {
           )}
 
           {tokenContext.isLoggedIn && (
-
-            <Route exact path="/profile" element={<UserProfile />} />
-           )}
-
+            <Route path="/profile" element={<UserProfile />} />
+          )}
 
           <Route exact path="*" element={<Navigate to="/" />} />
         </Routes>
       </BrowserRouter>
-    </TokenContextProvider>
   );
 };
 
